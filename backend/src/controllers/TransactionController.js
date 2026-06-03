@@ -34,7 +34,8 @@ export const create = async (req, res) => {
 
         // Force tax transaction
         if (data.merchant === 'Pajak PPh Final 0.5%') {
-            categoryId = 5;
+            const taxCat = await getCategoryByName('Pajak');
+            categoryId = taxCat?.id || 12;
             data.type = 'expense';
             console.log("Tax Transaction Intercepted/Created");
             console.log("Category ID:", categoryId);
@@ -184,13 +185,22 @@ export const createFromOCR = async (req, res) => {
         const rawText = ocrResult.ocr_mentah || ocrResult.raw_text || "";
 
         // Category mapping
-        const categoryId = await getMappedCategoryId(ocrResult.category_name);
+        const categoryId = await getMappedCategoryId(
+            ocrResult.classes,
+            ocrResult.category_id || ocrResult.category_name
+        );
         
-        console.log("OCR Category:", ocrResult.category_name);
+        console.log("OCR Category classes:", ocrResult.classes);
+        console.log("OCR Category name:", ocrResult.category_id || ocrResult.category_name);
         console.log("Mapped Category ID:", categoryId);
         
-        // name will be handled by the database JOIN, but we can pass a fallback for response if needed.
-        const finalCategoryName = ocrResult.category_name || "Belum Dikategorikan";
+        let finalCategoryName = "Belum Dikategorikan";
+        if (categoryId !== null && categoryId !== undefined) {
+            const cat = await getCategoryById(categoryId);
+            if (cat) {
+                finalCategoryName = cat.name;
+            }
+        }
 
         // 4. Save transaction to Database
         const mappedData = {
@@ -284,7 +294,8 @@ export const update = async (req, res) => {
 
         // Force tax transaction
         if (data.merchant === 'Pajak PPh Final 0.5%') {
-            categoryId = 5;
+            const taxCat = await getCategoryByName('Pajak');
+            categoryId = taxCat?.id || 12;
             data.type = 'expense';
             console.log("Tax Transaction Intercepted/Updated");
             console.log("Category ID:", categoryId);

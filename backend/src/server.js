@@ -16,11 +16,13 @@ try {
     await pool.query(`UPDATE categories SET type = 'expense' WHERE type IS NULL;`);
     
     const expenses = [
-      { id: 1, name: 'Bahan Baku' },
-      { id: 2, name: 'Listrik & Air' },
-      { id: 3, name: 'Gaji Karyawan' },
-      { id: 4, name: 'Peralatan' },
-      { id: 5, name: 'Pajak' }
+      { id: 0, name: 'ATK/Administrasi' },
+      { id: 1, name: 'Fashion' },
+      { id: 2, name: 'Kesehatan' },
+      { id: 3, name: 'Makanan & Bahan Makanan' },
+      { id: 4, name: 'Minuman & Bahan Minuman' },
+      { id: 5, name: 'Perlengkapan Operasional' },
+      { id: 12, name: 'Pajak' }
     ];
     for (const exp of expenses) {
       await pool.query(`

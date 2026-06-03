@@ -1,7 +1,9 @@
 import pkg from 'pg';
 const { Pool } = pkg;
 import dotenv from 'dotenv';
+import path from 'path';
 dotenv.config();
+dotenv.config({ path: path.resolve(process.cwd(), 'backend/.env') });
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL
@@ -21,11 +23,13 @@ async function run() {
     console.log("Updating IDs 1-5 to specific expense categories...");
     // If ID 1-5 don't exist, we should INSERT them. We can do an UPSERT.
     const expenses = [
-      { id: 1, name: 'Bahan Baku' },
-      { id: 2, name: 'Listrik & Air' },
-      { id: 3, name: 'Gaji Karyawan' },
-      { id: 4, name: 'Peralatan' },
-      { id: 5, name: 'Pajak' }
+      { id: 0, name: 'ATK/Administrasi' },
+      { id: 1, name: 'Fashion' },
+      { id: 2, name: 'Kesehatan' },
+      { id: 3, name: 'Makanan & Bahan Makanan' },
+      { id: 4, name: 'Minuman & Bahan Minuman' },
+      { id: 5, name: 'Perlengkapan Operasional' },
+      { id: 12, name: 'Pajak' }
     ];
 
     for (const exp of expenses) {

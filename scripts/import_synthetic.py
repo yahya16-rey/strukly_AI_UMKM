@@ -19,32 +19,36 @@ def map_category(raw_category, type_name):
     raw = str(raw_category).lower().strip()
     
     if type_name == 'pengeluaran':
-        if 'listrik' in raw or 'air' in raw or 'utilitas' in raw:
-            return 2 # Listrik & Air
-        elif 'gaji' in raw or 'karyawan' in raw:
-            return 3 # Gaji Karyawan
-        elif 'alat' in raw or 'peralatan' in raw or 'operasional' in raw or 'perlengkapan' in raw or 'atk' in raw or 'administrasi' in raw or 'fashion' in raw:
-            return 4 # Peralatan
+        if 'atk' in raw or 'administrasi' in raw:
+            return 0  # ATK/Administrasi
+        elif 'fashion' in raw:
+            return 1  # Fashion
+        elif 'kesehatan' in raw:
+            return 2  # Kesehatan
+        elif 'makanan' in raw:
+            return 3  # Makanan & Bahan Makanan
+        elif 'minuman' in raw:
+            return 4  # Minuman & Bahan Minuman
+        elif 'operasional' in raw or 'perlengkapan' in raw:
+            return 5  # Perlengkapan Operasional
         elif 'pajak' in raw:
-            return 5 # Pajak
-        elif 'makanan' in raw or 'minuman' in raw or 'baku' in raw:
-            return 1 # Bahan Baku
+            return 12  # Pajak
         else:
-            return 11 # Belum Dikategorikan
+            return 11  # Belum Dikategorikan
             
     elif type_name == 'pemasukan':
         if 'makanan' in raw:
-            return 7 # Penjualan Makanan
+            return 7  # Penjualan Makanan
         elif 'minuman' in raw:
-            return 8 # Penjualan Minuman
+            return 8  # Penjualan Minuman
         elif 'jasa' in raw:
-            return 9 # Jasa
+            return 9  # Jasa
         elif 'lain' in raw:
-            return 10 # Lainnya
+            return 10  # Lainnya
         else:
-            return 6 # Penjualan Produk (Default income)
+            return 6  # Penjualan Produk (Default income)
             
-    return 11 # Default fallback: Belum Dikategorikan
+    return 11  # Default fallback: Belum Dikategorikan
 
 def main():
     csv_file = "data/Data_Sintesis/synthetic_umkm_10000.csv"
