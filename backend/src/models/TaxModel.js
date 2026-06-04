@@ -23,7 +23,7 @@ export const calculateTax = async (userId) => {
 
     const monthly_average_income = total_income / active_months;
     const estimated_yearly_revenue = monthly_average_income * 12;
-    const estimated_tax = estimated_yearly_revenue * 0.005;
+    const estimated_tax = estimated_yearly_revenue <= 500000000 ? 0 : (estimated_yearly_revenue - 500000000) * 0.005;
 
     let status = "info";
     let message = "Estimasi pajak tersedia sebagai referensi.";

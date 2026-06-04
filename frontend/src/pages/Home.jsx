@@ -102,7 +102,7 @@ const Home = ({ transactions, refreshTransactions, loadingTransactions }) => {
     setOmset(Number(rawValue));
   };
 
-  const estimasiPajak = omset * 0.005;
+  const estimasiPajak = omset <= 500000000 ? 0 : (omset - 500000000) * 0.005;
 
   // Handler Simpan Pemasukan Manual
   const handleSaveIncome = async (e) => {
@@ -494,7 +494,7 @@ const Home = ({ transactions, refreshTransactions, loadingTransactions }) => {
               
               {/* Input Omset */}
               <div className="space-y-3">
-                <label className="text-[10px] font-bold tracking-widest text-slate-500 uppercase">Total Omset Bulanan (Rp)</label>
+                <label className="text-[10px] font-bold tracking-widest text-slate-500 uppercase">Total Omset Tahunan (Rp)</label>
                 <div className="relative flex items-center bg-slate-50 hover:bg-slate-100 transition-colors rounded-2xl p-6 border border-slate-100/50 group">
                   <span className="text-2xl font-bold text-slate-400 mr-4">Rp</span>
                   <input 

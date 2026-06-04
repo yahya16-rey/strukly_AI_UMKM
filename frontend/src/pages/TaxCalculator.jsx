@@ -62,7 +62,7 @@ const TaxCalculator = () => {
         setOmset(parsedValue);
 
         // kalkulasi lokal sementara (jika user ingin input manual)
-        setEstimatedTax(parsedValue * 0.005);
+        setEstimatedTax(parsedValue <= 500000000 ? 0 : (parsedValue - 500000000) * 0.005);
     };
 
     // Fungsi helper untuk mendapatkan warna status

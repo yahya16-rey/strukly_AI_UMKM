@@ -15,7 +15,8 @@ export const calculateForecast = (incomeData, expenseData) => {
     const avgExpense =
         expenseData.length > 0 ? expenseTotal / expenseData.length : 0;
 
-    const estimatedTax = avgIncome * 0.005;
+    const yearlyForecastIncome = avgIncome * 12;
+    const estimatedTax = yearlyForecastIncome <= 500000000 ? 0 : ((yearlyForecastIncome - 500000000) * 0.005) / 12;
     const estimatedProfit = avgIncome - avgExpense;
 
     return {
